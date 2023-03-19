@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Musab Gultekin</title>
+    <link>https://musabgultekin.com/</link>
+    <description>Recent content on Musab Gultekin</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 19 Mar 2023 16:45:48 +0300</lastBuildDate><atom:link href="https://musabgultekin.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Wikipedia Turkish Dataset</title>
+      <link>https://musabgultekin.com/posts/wikipedia-turkish-dataset/</link>
+      <pubDate>Sun, 19 Mar 2023 16:45:48 +0300</pubDate>
+      
+      <guid>https://musabgultekin.com/posts/wikipedia-turkish-dataset/</guid>
+      <description>Release of cleaned Turkish Wikipedia Dataset Link</description>
+    </item>
+    
+  </channel>
+</rss>

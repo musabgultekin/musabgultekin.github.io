@@ -1,0 +1,4 @@
+baseURL = 'https://musabgultekin.com'
+languageCode = 'en-us'
+title = 'Musab Gultekin'
+theme = "paper"
