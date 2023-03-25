@@ -8,12 +8,13 @@
     <language>en-us</language>
     <lastBuildDate>Sun, 19 Mar 2023 16:45:48 +0300</lastBuildDate><atom:link href="https://musabgultekin.com/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Wikipedia Turkish Dataset</title>
+      <title>Wikipedia Turkish Dataset Release</title>
       <link>https://musabgultekin.com/posts/wikipedia-turkish-dataset/</link>
       <pubDate>Sun, 19 Mar 2023 16:45:48 +0300</pubDate>
       
       <guid>https://musabgultekin.com/posts/wikipedia-turkish-dataset/</guid>
-      <description>Release of cleaned Turkish Wikipedia Dataset Link</description>
+      <description>Hello, language enthusiasts! I am excited to announce the release of my personal side-project: the Wikipedia Turkish February 2023 dataset! This dataset is a comprehensive collection of articles from the Turkish Wikipedia, specifically designed for masked language modeling and text generation tasks. As a passionate advocate for the development and exploration of the Turkish language, I am thrilled to share this resource with the community.
+In this blog post, I&amp;rsquo;ll be giving you a brief overview of the dataset, its features, and how you can utilize it for your projects.</description>
     </item>
     
   </channel>
