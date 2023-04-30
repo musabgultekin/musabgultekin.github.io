@@ -1,7 +1,7 @@
 ---
 title: "Machine Learning as Accelerated Evolution" 
 date: 2023-03-27T18:56:02+03:00
-draft: true
+draft: false
 ---
 
 Each neuron in a neural network can be considered just like a DNA. When some nucleotide changes, we call it a mutation. The result is a different living creature than its ancestors. 
