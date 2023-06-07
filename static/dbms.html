@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Management System</title>
+  <style>
+    .form-group {
+      margin-bottom: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>Book Management System</h1>
+  <button id="loadBooks">Load Books</button>
+  <button id="addBookButton">Add New Book</button>
+  <button id="updateBookButton">Update Book</button>
+  <button id="deleteBookButton">Delete Book</button>
+  <div id="addBookForm" style="display:none;">
+    <div class="form-group">
+      <label for="title">Title:</label>
+      <input type="text" id="title" name="title">
+    </div>
+    <div class="form-group">
+      <label for="authors">Authors:</label>
+      <input type="text" id="authors" name="authors">
+    </div>
+    <div class="form-group">
+      <label for="description">Description:</label>
+      <textarea id="description" name="description"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="rating">Rating:</label>
+      <input type="number" id="rating" name="rating">
+    </div>
+    <div class="form-group">
+      <label for="comments">Comments:</label>
+      <textarea id="comments" name="comments"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="status">Status:</label>
+      <input type="text" id="status" name="status">
+    </div>
+    <button id="submitBook">Submit</button>
+  </div>
+  <div id="deleteBookForm" style="display:none;">
+    <div class="form-group">
+      <label for="bookId">Book ID:</label>
+      <input type="number" id="bookId" name="bookId">
+    </div>
+    <button id="submitDelete">Delete</button>
+  </div>
+  <div id="updateBookForm" style="display:none;">
+    <div class="form-group">
+      <label for="updateBookId">Book ID:</label>
+      <input type="number" id="updateBookId" name="updateBookId">
+    </div>
+    <div class="form-group">
+      <label for="updateTitle">Title:</label>
+      <input type="text" id="updateTitle" name="updateTitle">
+    </div>
+    <div class="form-group">
+      <label for="updateAuthor">Authors:</label>
+      <input type="text" id="updateAuthor" name="updateAuthor">
+    </div>
+    <div class="form-group">
+      <label for="updateDescription">Description:</label>
+      <textarea id="updateDescription" name="updateDescription"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="updateRating">Rating:</label>
+      <input type="number" id="updateRating" name="updateRating">
+    </div>
+    <div class="form-group">
+      <label for="updateComments">Comments:</label>
+      <textarea id="updateComments" name="updateComments"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="updateStatus">Status:</label>
+      <input type="text" id="updateStatus" name="updateStatus">
+    </div>
+    <button id="submitUpdate">Update</button>
+  </div>
+  <div id="deleteBookForm" style="display:none;">
+    <!-- Delete book form content -->
+  </div>
+  <div id="books"></div>
+
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
+
+    // Initialize Supabase client
+    const supabaseUrl = 'https://kvjzzdzotleoytvoyjmw.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt2anp6ZHpvdGxlb3l0dm95am13Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODQwNzQ0NTIsImV4cCI6MTk5OTY1MDQ1Mn0.VkrXqJUOwYJxDguC6ITVIK9hwPCS3DpeMO2XYOyrsfc';
+    const supabase = createClient(supabaseUrl, supabaseKey);
+
+    // Fetch books from the database and display them
+    async function fetchBooks() {
+      const { data, error } = await supabase.from('books').select('*'); // SELECT * FROM books
+      if (error) {
+        console.error('Error fetching books:', error);
+      } else {
+        displayBooks(data);
+      }
+    }
+
+    // Display books in the HTML
+    function displayBooks(books) {
+      const booksDiv = document.getElementById('books');
+      booksDiv.innerHTML = ''; // Clear the previous content
+      books.forEach(book => {
+        const bookDiv = document.createElement('div');
+        bookDiv.innerHTML = `
+          <h2>${book.title}</h2>
+          <p>ID: ${book.id}</p>
+          <p>Authors: ${book.authors}</p>
+          <p>Description: ${book.description}</p>
+          <p>Rating: ${book.rating}</p>
+          <p>Comments: ${book.comments}</p>
+          <p>Status: ${book.status}</p>
+          <p>Created At: ${book.created_at}</p>
+        `;
+        booksDiv.appendChild(bookDiv);
+      });
+    }
+
+    // Add new book to the database
+    async function addBook() {
+      const title = document.getElementById('title').value;
+      const authors = document.getElementById('authors').value;
+      const description = document.getElementById('description').value;
+      const rating = document.getElementById('rating').value;
+      const comments = document.getElementById('comments').value;
+      const status = document.getElementById('status').value;
+
+      const { data, error } = await supabase.from('books').insert([
+        { title, authors, description, rating, comments, status }
+        // INSERT INTO books (title, authors, description, rating, comments, status)
+        // VALUES (${title}, ${authors}, ${description}, ${rating}, ${comments}, ${status})
+      ]);
+
+
+      if (error) {
+        console.error('Error adding book:', error);
+      } else {
+        console.log('Book added successfully:', data);
+        fetchBooks(); // Refresh the books list
+      }
+    }
+
+    // Update book in the database
+    async function updateBook() {
+      const bookId = document.getElementById('updateBookId').value;
+      const title = document.getElementById('updateTitle').value;
+      const authors = document.getElementById('updateAuthor').value;
+      const description = document.getElementById('updateDescription').value;
+      const rating = document.getElementById('updateRating').value;
+      const comments = document.getElementById('updateComments').value;
+      const status = document.getElementById('updateStatus').value;
+
+      const { data, error } = await supabase.from('books').update({
+        title, authors, description, rating, comments, status
+      }).eq('id', bookId);
+
+      if (error) {
+        console.error('Error updating book:', error);
+      } else {
+        console.log('Book updated successfully:', data);
+        fetchBooks(); // Refresh the books list
+      }
+    }
+    
+    // Delete book from the database
+    async function deleteBook() {
+      const bookId = document.getElementById('bookId').value;
+
+      const { data, error } = await supabase.from('books').delete().eq('id', bookId);
+
+      if (error) {
+        console.error('Error deleting book:', error);
+      } else {
+        console.log('Book deleted successfully:', data);
+        fetchBooks(); // Refresh the books list
+      }
+    }
+
+    // Add event listeners to the buttons
+    document.getElementById('loadBooks').addEventListener('click', fetchBooks);
+    document.getElementById('addBookButton').addEventListener('click', () => {
+      const form = document.getElementById('addBookForm');
+      form.style.display = form.style.display === 'none' ? 'block' : 'none';
+    });
+    document.getElementById('updateBookButton').addEventListener('click', () => {
+      const form = document.getElementById('updateBookForm');
+      form.style.display = form.style.display === 'none' ? 'block' : 'none';
+    });
+    document.getElementById('deleteBookButton').addEventListener('click', () => {
+      const form = document.getElementById('deleteBookForm');
+      form.style.display = form.style.display === 'none' ? 'block' : 'none';
+    });
+    document.getElementById('submitBook').addEventListener('click', addBook);
+    document.getElementById('submitUpdate').addEventListener('click', updateBook);
+    document.getElementById('submitDelete').addEventListener('click', deleteBook);
+  </script>
+</body>
+</html>
